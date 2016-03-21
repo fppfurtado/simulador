@@ -78,14 +78,18 @@ public class GeradorGraficos implements Controlador, PropertyChangeListener {
 
         int[] celRadialIncial = painelDesign.buscarCelula(new Point(boxRadial.x, boxRadial.y));
         int[] celRadialFinal = painelDesign.buscarCelula(new Point((int)boxRadial.getMaxX(), (int)boxRadial.getMaxY()));
-
+        
        // System.out.println("celRadialInicial["+celRadialIncial[0]+"]["+celRadialIncial[1]+"]");
        // System.out.println("celRadialFinal["+celRadialFinal[0]+"]["+celRadialFinal[1]+"]");
         
         int linIncialRadial = celRadialIncial[0];
         int colIncialRadial = celRadialIncial[1];
         int linFinalRadial = celRadialFinal[0];
-        int colFinalRadial = celRadialFinal[1];
+        int colFinalRadial = celRadialFinal[1];        
+        
+        int[] coordCelPontoInicial = painelDesign.buscarCelula(pontoInicial);
+        PainelDesign.Celula celPontoInicial = painelDesign.getMatrizCelulas().get(
+                coordCelPontoInicial[0]).get(coordCelPontoInicial[1]);
 
         for (int i = linIncialRadial; i <= linFinalRadial; i++) {
             for (int j = colIncialRadial; j <= colFinalRadial; j++) {
@@ -96,7 +100,8 @@ public class GeradorGraficos implements Controlador, PropertyChangeListener {
                 
                   if (radial.intersects(cel)) {
 
-                    float distanciaPontosPixels = (float) new Point(0, 0).distance(new Point(cel.x, cel.y));
+                    float distanciaPontosPixels = (float) new Point(celPontoInicial.x, celPontoInicial.y)
+                            .distance(new Point(cel.x, cel.y));
                     float distanciaPontosMetros = (float) ControladorDesign.converterCoordenadas(
                             distanciaPontosPixels,
                             distanciaMaxPixels,
